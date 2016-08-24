@@ -1,10 +1,10 @@
 # Desk
 
-Manage your OS X desktop contents with ease using this wrapper for the excellent [ZBackup](https://github.com/zbackup/zbackup).
+Tame your messy OS X desktop contents with ease using this wrapper for the excellent [ZBackup](https://github.com/zbackup/zbackup).
 
 ## Prerequisites
 
-* ZBackup - [https://github.com/zbackup/zbackup]()
+ZBackup - [https://github.com/zbackup/zbackup]()
 
 ## Installation
 
