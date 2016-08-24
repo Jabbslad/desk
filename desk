@@ -35,7 +35,7 @@ case $CMD in
     ;;
     peek)
         PEEK=$2
-        if [ -z "$RESTORE" ]; then
+        if [ -z "$PEEK" ]; then
             PEEK=`ls -1r $BACKUP_DIR | head -1`
         fi
         echo "Peeking into $PEEK"
