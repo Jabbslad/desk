@@ -10,6 +10,16 @@ FLAGS="--non-encrypted"
 ZBACKUP_CMD="zbackup $FLAGS "
 DATE=`date '+%Y%m%d-%H%M%S'`
 
+if ! hash zbackup 2>/dev/null; then
+    echo "Error: You must install zbackup!"
+    exit 1
+fi
+
+if [[ ! -d "$ZBACKUP_HOME" ]]; then
+  $ZBACKUP_CMD init "$ZBACKUP_HOME"
+  mkdir "$META_DIR"
+fi
+
 case $CMD in
     clean)
     	echo "Saving backup-$DATE"
@@ -38,7 +48,7 @@ case $CMD in
     	$ZBACKUP_CMD --silent restore $BACKUP_DIR/$RESTORE | tar xP > /dev/null 2>&1
     ;;
     *)
-      echo "unknown option"
+      echo "usage: $APP <clean|ls|rm|restore> [args]"
     ;;
 esac
 
