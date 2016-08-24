@@ -1,0 +1,45 @@
+#!/bin/bash
+
+APP=`basename "$0"`
+CMD="$1"
+DESKTOP="$HOME/Desktop"
+ZBACKUP_HOME="$HOME/.desktop-backup"
+BACKUP_DIR="$ZBACKUP_HOME/backups"
+META_DIR="$ZBACKUP_HOME/meta"
+FLAGS="--non-encrypted"
+ZBACKUP_CMD="zbackup $FLAGS "
+DATE=`date '+%Y%m%d-%H%M%S'`
+
+case $CMD in
+    clean)
+    	echo "Saving backup-$DATE"
+    	if tar cP $DESKTOP | $ZBACKUP_CMD backup $BACKUP_DIR/backup-$DATE > /dev/null 2>&1; then
+    		echo "backup-$DATE $2" > $META_DIR/backup-$DATE.meta
+    		rm -Rf $DESKTOP/*
+    	fi
+    ;;
+    ls)
+        if [ "$(ls -A $META_DIR)" ]; then
+    	   cat $META_DIR/* | sort -r
+        fi
+    ;;
+    rm)
+    	if [ -n "$2" ]; then
+            rm -f $META_DIR/$2.meta
+    		rm -Rf $BACKUP_DIR/$2
+    	fi
+    ;;
+    restore)
+    	RESTORE=$2
+    	if [ -z "$RESTORE" ]; then
+    		RESTORE=`ls -1r $BACKUP_DIR | head -1`
+    	fi
+    	echo "Restoring $RESTORE"
+    	$ZBACKUP_CMD --silent restore $BACKUP_DIR/$RESTORE | tar xP > /dev/null 2>&1
+    ;;
+    *)
+      echo "unknown option"
+    ;;
+esac
+
+$ZBACKUP_CMD --silent gc $ZBACKUP_HOME > /dev/null 2>&1
