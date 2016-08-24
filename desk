@@ -33,6 +33,14 @@ case $CMD in
     	   cat $META_DIR/* | sort -r
         fi
     ;;
+    peek)
+        PEEK=$2
+        if [ -z "$RESTORE" ]; then
+            PEEK=`ls -1r $BACKUP_DIR | head -1`
+        fi
+        echo "Peeking into $PEEK"
+        $ZBACKUP_CMD --silent restore $BACKUP_DIR/$PEEK | tar tv
+    ;;
     rm)
     	if [ -n "$2" ]; then
             rm -f $META_DIR/$2.meta

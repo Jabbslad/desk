@@ -22,6 +22,12 @@ ZBackup - [https://github.com/zbackup/zbackup]()
 
 `desk ls` - list desktop archives with comments
 
+### Peek Into Desktop Archive
+
+`desk peek` - list contents of latest archive
+
+`desk peek <name>` - list contents of named archive
+
 ### Restore Desktop Archive
 
 `desk restore` - restore latest archive to desktop
